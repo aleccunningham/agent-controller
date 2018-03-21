@@ -5,8 +5,8 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/kubernetes"
 
-	"github.com/aleccunnningham/agent-controller/log"
-	"github.com/spotahome/aleccunningham/agent-controller/service"
+	"github.com/marjoram/agent-controller/log"
+	"github.com/marjoram/agent-controller/service"
 )
 
 // Controller is a controller that echoes pod events.

@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/aleccunnningham/agent-controller/controller"
+	operator "github.com/marjoram/pipeline-operator/operator/pipeline"
 	"k8s.io/client-go/util/homedir"
 )
 
@@ -14,16 +14,14 @@ import (
 type Flags struct {
 	flagSet *flag.FlagSet
 
-	Namespace   string
 	ResyncSec   int
 	KubeConfig  string
 	Development bool
 }
 
-// ControllerConfig converts the command line flag arguments to controller configuration.
-func (f *Flags) ControllerConfig() controller.Config {
-	return controller.Config{
-		Namespace:    f.Namespace,
+// OperatorConfig converts the command line flag arguments to operator configuration.
+func (f *Flags) OperatorConfig() operator.Config {
+	return operator.Config{
 		ResyncPeriod: time.Duration(f.ResyncSec) * time.Second,
 	}
 }
@@ -37,7 +35,6 @@ func NewFlags() *Flags {
 	kubehome := filepath.Join(homedir.HomeDir(), ".kube", "config")
 
 	// Init flags.
-	f.flagSet.StringVar(&f.Namespace, "namespace", "", "kubernetes namespace where this app is running")
 	f.flagSet.IntVar(&f.ResyncSec, "resync-seconds", 30, "The number of seconds the controller will resync the resources")
 	f.flagSet.StringVar(&f.KubeConfig, "kubeconfig", kubehome, "kubernetes configuration path, only used when development mode enabled")
 	f.flagSet.BoolVar(&f.Development, "development", false, "development flag will allow to run the operator outside a kubernetes cluster")
